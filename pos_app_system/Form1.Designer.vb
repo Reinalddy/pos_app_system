@@ -109,14 +109,14 @@ Partial Class Barang
         '
         'TextBox3
         '
-        Me.TextBox3.Location = New System.Drawing.Point(87, 109)
+        Me.TextBox3.Location = New System.Drawing.Point(87, 85)
         Me.TextBox3.Name = "TextBox3"
         Me.TextBox3.Size = New System.Drawing.Size(100, 20)
         Me.TextBox3.TabIndex = 8
         '
         'TextBox4
         '
-        Me.TextBox4.Location = New System.Drawing.Point(87, 82)
+        Me.TextBox4.Location = New System.Drawing.Point(87, 111)
         Me.TextBox4.Name = "TextBox4"
         Me.TextBox4.Size = New System.Drawing.Size(100, 20)
         Me.TextBox4.TabIndex = 9

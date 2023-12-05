@@ -1,5 +1,6 @@
 ﻿Imports System.Data.OleDb
 Imports System.Windows.Forms.VisualStyles.VisualStyleElement
+Imports System.Windows.Forms.VisualStyles.VisualStyleElement.ToolBar
 
 Public Class Barang
     Private Sub Label1_Click(sender As Object, e As EventArgs) Handles Label1.Click
@@ -74,5 +75,18 @@ Public Class Barang
             End Try
         End If
         If Not ((e.KeyChar >= "0" And e.KeyChar <= "9") Or e.KeyChar = vbBack) Then e.Handled() = True
+    End Sub
+
+    Private Sub TextBox2_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBox2.KeyPress
+
+        If e.KeyChar = Chr(13) Then ComboBox1.Focus()
+    End Sub
+
+    Private Sub ComboBox1_KeyPress(sender As Object, e As KeyPressEventArgs) Handles ComboBox1.KeyPress
+        If e.KeyChar = Chr(13) Then TextBox3.Focus()
+    End Sub
+
+    Private Sub TextBox3_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBox3.KeyPress
+        If e.KeyChar = Chr(13) Then Button1.Focus()
     End Sub
 End Class
