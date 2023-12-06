@@ -47,6 +47,7 @@ Public Class Barang
     End Sub
 
     Private Sub Barang_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
         Call Koneksi()
 
         Call Tampilkan()
