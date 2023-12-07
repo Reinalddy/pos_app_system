@@ -1,62 +1,62 @@
 ﻿Imports System.Data.OleDb
-Public Class Pelanggan
+Imports System.Windows.Forms.VisualStyles.VisualStyleElement
+
+Public Class Pemasok
+
+    Private Sub Pemasok_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Call Koneksi()
+        Call Tampilkan()
+    End Sub
     Sub Kosongkan()
         TextBox1.Text = ""
         TextBox2.Text = ""
         TextBox3.Text = ""
         TextBox4.Text = ""
         TextBox5.Text = ""
-        ComboBox1.Text = ""
+        TextBox6.Text = ""
         TextBox1.Focus()
 
     End Sub
 
     Sub DataBaru()
+
         TextBox2.Text = ""
         TextBox3.Text = ""
         TextBox4.Text = ""
         TextBox5.Text = ""
-        ComboBox1.Text = ""
-        ComboBox1.Focus()
+        TextBox6.Text = ""
+        TextBox6.Focus()
+
     End Sub
 
     Sub Tampilkan()
-        DA = New OleDbDataAdapter("Select * from Pelanggan", CONN)
-        Ds = New DataSet
-        Ds.Clear()
-        DA.Fill(Ds, "Pelanggan'")
-        DGV.DataSource = (Ds.Tables("Pelanggan"))
+        DA = New OleDbDataAdapter("Select * from Pemasok", CONN)
+        DS = New DataSet
+        DS.Clear()
+        DA.Fill(Ds, "Pemasok")
+        DGV.DataSource = (DS.Tables("Pemasok"))
         DGV.ReadOnly = True
-    End Sub
 
-    Private Sub Pelanggan_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Call Koneksi()
-
-        Call Tampilkan()
     End Sub
 
     Private Sub TextBox1_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBox1.KeyPress
         TextBox1.MaxLength = 3
         If e.KeyChar = Chr(13) Then
             Try
-                Cmd = New OleDbCommand("select * from Pelanggan where KodePlg='" & TextBox1.Text & "'", CONN)
-
+                Cmd = New OleDbCommand("select * from Pemasok where KodePms='" & TextBox1.Text & "'", CONN)
                 RD = Cmd.ExecuteReader
-
                 RD.Read()
 
                 If RD.HasRows = True Then
                     TextBox2.Text = RD.GetString(1)
-                    TextBox3.Text = RD.GetValue(2)
-                    TextBox4.Text = RD.GetValue(3)
-                    TextBox5.Text = RD.GetValue(4)
-                    ComboBox1.Text = RD.GetString(5)
+                    TextBox3.Text = RD.GetString(2)
+                    TextBox4.Text = RD.GetString(3)
+                    TextBox5.Text = RD.GetString(4)
+                    TextBox6.Text = RD.GetString(5)
                     TextBox2.Focus()
-
                 Else
                     Call DataBaru()
                     TextBox2.Focus()
-
                 End If
 
             Catch ex As Exception
@@ -75,34 +75,42 @@ Public Class Pelanggan
 
     Private Sub TextBox4_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBox4.KeyPress
         If e.KeyChar = Chr(13) Then TextBox5.Focus()
-        If Not ((e.KeyChar >= "0" And e.KeyChar <= "9") Or e.KeyChar = vbBack) Then e.Handled() = True
     End Sub
 
     Private Sub TextBox5_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBox5.KeyPress
-        If e.KeyChar = Chr(13) Then ComboBox1.Focus()
+        If e.KeyChar = Chr(13) Then TextBox6.Focus()
     End Sub
 
-    Private Sub ComboBox1_KeyPress(sender As Object, e As KeyPressEventArgs) Handles ComboBox1.KeyPress
+    Private Sub TextBox6_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBox6.KeyPress
         If e.KeyChar = Chr(13) Then Button1.Focus()
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        If TextBox1.Text = "" Or TextBox2.Text = "" Or TextBox3.Text = "" Or TextBox4.Text = "" Or TextBox5.Text = "" Or ComboBox1.Text = "" Then
+        If TextBox1.Text = "" Or TextBox2.Text = "" Or TextBox3.Text = "" Or TextBox4.Text = "" Or TextBox5.Text = "" Or TextBox6.Text = "" Then
             MsgBox("Data Belum Lengkap")
             Exit Sub
         Else
-            Cmd = New OleDbCommand("Select * from Pelanggan where KodePlg='" & TextBox1.Text & "'", CONN)
-            RD = Cmd.ExecuteReader
+            Cmd = New OleDbCommand("Select * from Pemasok where KodePms='" & TextBox1.Text & "'", CONN)
+            RD = CMD.ExecuteReader
             RD.Read()
             If Not RD.HasRows Then
-                Dim sqltambah As String = "Insert into Pelanggan(KodePlg,NamaPlg,AlamatPlg,TeleponPlg,EmailPlg,JK) values" & "'('" & TextBox1.Text & "','" & TextBox2.Text & "','" & TextBox3.Text & "','" & TextBox4.Text & "','" & TextBox5.Text & "','" & ComboBox1.Text & "')"
+                Dim sqltambah As String = "Insert into Pemasok (KodePms, NamaPms, AlamatPms, TeleponPms, PersonPms,EmailPms) values " &
+            "('" & TextBox1.Text & "','" & TextBox2.Text & "','" & TextBox3.Text & "','" & TextBox4.Text & "','" & TextBox5.Text & "','" & TextBox6.Text & "')"
                 Cmd = New OleDbCommand(sqltambah, CONN)
                 Cmd.ExecuteNonQuery()
-
                 Call Kosongkan()
                 Call Tampilkan()
+
             Else
-                Dim sqledit As String = "Update Pelanggan set " & "NamaPlg='" & TextBox2.Text & "', " & "AlamatPlg='" & TextBox3.Text & "', " & "TeleponPlg='" & TextBox4.Text & "', " & "EmailPlg='" & TextBox5.Text & "', " & "JK='" & ComboBox1.Text & "' " & "where KodePlg='" & TextBox1.Text & "'"
+
+                Dim sqledit As String = "Update Pemasok set " &
+                "NamaPms='" & TextBox2.Text & "', " &
+                "AlamatPms='" & TextBox3.Text & "', " &
+                "TeleponPms='" & TextBox4.Text & "', " &
+                "PersonPms=' " & TextBox5.Text & "', " &
+                "EmailPms=' " & TextBox6.Text & "', " &
+                "Where KodePms='" & TextBox1.Text & "'"
+
                 Cmd = New OleDbCommand(sqledit, CONN)
                 Cmd.ExecuteNonQuery()
                 Call Kosongkan()
@@ -113,12 +121,12 @@ Public Class Pelanggan
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         If TextBox1.Text = "" Then
-            MsgBox("Isi kode Pelanggan terlebih dahulu")
+            MsgBox("isi kode Pemasok dulu cess")
             TextBox1.Focus()
             Exit Sub
         Else
-            If MessageBox.Show("Yakin akan dihapus..?", "", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-                Cmd = New OleDbCommand("Delete * from Pelanggan where KodePlg ='" & TextBox1.Text & "'", CONN)
+            If MessageBox.Show("Yakin akan di hapus..?", "", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+                Cmd = New OleDbCommand("Delete * From Pemasok Where KodePms ='" & TextBox1.Text & "'", CONN)
                 Cmd.ExecuteNonQuery()
                 Call Kosongkan()
                 Call Tampilkan()
@@ -135,4 +143,5 @@ Public Class Pelanggan
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
         Me.Close()
     End Sub
+
 End Class
