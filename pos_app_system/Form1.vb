@@ -90,4 +90,54 @@ Public Class Barang
     Private Sub TextBox3_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBox3.KeyPress
         If e.KeyChar = Chr(13) Then Button1.Focus()
     End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        If TextBox1.Text = "" Or TextBox2.Text = "" Or ComboBox1.Text = "" Or TextBox3.Text = "" Then
+            MsgBox("Data Belum Lengkap")
+            Exit Sub
+        Else
+            Cmd = New OleDbCommand("Select * from barang where KodeBrg='" & TextBox1.Text & "'", CONN)
+            RD = Cmd.ExecuteReader
+            RD.Read()
+            If Not RD.HasRows Then
+                Dim sgltambah As String = "Insert into barang (KodeBrg, NamaBrg, Satuan, JumlahBrg, Harga) values " & "('" & TextBox1.Text & "','" & TextBox2.Text & "','" & ComboBox1.Text & "','" & TextBox3.Text & "','" & TextBox4.Text & "')"
+                Cmd = New OleDbCommand(sgltambah, CONN)
+                Cmd.ExecuteNonQuery()
+                Call Kosongkan()
+                Call Tampilkan()
+            Else
+                Dim sgledit As String = "Update barang Set " & "NamaBrg='" & TextBox2.Text & "', " & "Satuan='" & ComboBox1.Text & "', " & "JumlahBrg='" & TextBox3.Text & "' " & "Harga='" & TextBox4.Text & "' " & "where KodeBrg='" & TextBox1.Text & "'"
+                Cmd = New OleDbCommand(sgledit, CONN)
+                CMD.ExecuteNonQuery()
+                Call Kosongkan()
+                Call Tampilkan()
+            End If
+        End If
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        If TextBox1.Text = "" Then
+            MsgBox("Isi kode barang terlebih dahulu")
+            TextBox1.Focus()
+            Exit Sub
+        Else
+            If MessageBox.Show("Yakin akan dihapus..?", "'",
+            MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+                Cmd = New OleDbCommand("Delete * from barang where KodeBrg='" & TextBox1.Text & "'", CONN)
+                Cmd.ExecuteNonQuery()
+                Call Kosongkan()
+                Call Tampilkan()
+            Else
+                Call Kosongkan()
+            End If
+        End If
+    End Sub
+
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        Call Kosongkan()
+    End Sub
+
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
+        Me.Close()
+    End Sub
 End Class
