@@ -130,8 +130,8 @@ Public Class Penerimaan
             Dim Simpan As String
             Simpan = "insert into Penerimaan (nomorTrm, tanggalTrm, KodePms, nomorbon, totalTrm, kedepmk) values " & _
                 "('" & LBLNomor.Text & "','" & LBLTanggal.Text & "','" & ComboBox1.Text & "','" & NomorReff.Text & "','" & TotalTerima.Text & "',' & MenuUtama.Panell.Text & "')"
-            CMD = New OleDbCommand (Simpan, CONN)
-            CMD. ExecuteNonQuery ()
+            Cmd = New OleDbCommand(Simpan, CONN)
+            Cmd.ExecuteNonQuery()
             'baca tabel TMPTerima
             DA = New OleDbDataAdapter ("select * from TMPTerima", CONN)
             DS = New DataSet
@@ -144,8 +144,8 @@ Public Class Penerimaan
                 Cmd = New OleDbCommand(sglsimpan, CONN)
                 Cmd.ExecuteNonQuery()
                 'tambahstok barang
-                CMD = New OleDbCommand("select * from barang where KodeBrg='" & TBL.Rows(baris)(0) & "'", CONN)
-                RD = CMD.ExecuteReader
+                Cmd = New OleDbCommand("select * from barang where KodeBrg='" & TBL.Rows(baris)(0) & "'", CONN)
+                RD = Cmd.ExecuteReader
                 RD.Read()
                 If RD.HasRows Then
                     Dim TambahStok As String = "update barang set JumlahBrg= '" & RD.GetValue(3) + TBL.Rows(baris)(3) & "' where KodeBrg='" & TBL.Rows(baris)(0) & "'"
@@ -181,8 +181,8 @@ Public Class Penerimaan
                     TStok.Focus()
                     Exit Sub
                 Else
-                    CMD = New OleDbCommand("Select * from barang  KodeBrg='" & TKode.Text & "'", CONN)
-                    RD = CMD.ExecuteReader
+                    Cmd = New OleDbCommand("Select * from barang  KodeBrg='" & TKode.Text & "'", CONN)
+                    RD = Cmd.ExecuteReader
                     RD.Read()
                     If RD.HasRows Then
                         TNama.Text = RD.GetString(1)
@@ -220,20 +220,19 @@ Public Class Penerimaan
 
     Private Sub TTerima_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TTerima.KeyPress
         If e.KeyChar = Chr(13) Then
-            CMD = New OleDbCommand("select * from TMPTerima where kode='" &
+            Cmd = New OleDbCommand("select * from TMPTerima where kode='" &
             TKode.Text & "'", CONN)
-            RD = CMD.ExecuteReader
+            RD = Cmd.ExecuteReader
             RD.Read()
             If RD.HasRows Then
                 Dim editjumlah As String = "update TMPTerima set diterima='" & TTerima.Text & "' where kode='" & TKode.Text & "'"
-                CMD = New OleDbCommand(editjumlah, CONN)
-                CMD.ExecuteNonQuery()
+                Cmd = New OleDbCommand(editjumlah, CONN)
+                Cmd.ExecuteNonQuery()
                 Call Tampilkan()
                 Call CariTotalTerima()
                 Call Kosongkan()
             Else
-                Dim sglsimpan As String = "Insert into TMPTerima (kode, nama, stokawal,diterima) values " &
-                    "('" & TKode.Text & "','" & TNama.Text & "','" & TStok.Text & "','" & TTerima.Text & "')"
+                Dim sglsimpan As String = "Insert into TMPTerima (kode, nama, stokawal,diterima) values " & "('" & TKode.Text & "','" & TNama.Text & "','" & TStok.Text & "','" & TTerima.Text & "')"
                 Cmd = New OleDbCommand(sglsimpan, CONN)
                 Cmd.ExecuteNonQuery()
                 Call Tampilkan()
@@ -275,15 +274,14 @@ Public Class Penerimaan
     End Sub
 
     Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox1.SelectedIndexChanged
-        CMD = New OleDbCommand ("select * from Pemasok where KodePms='" &
-        ComboBox1.Text & "'", CONN)
-        RD = CMD.ExecuteReader
+        Cmd = New OleDbCommand("select * from Pemasok where KodePms='" & ComboBox1.Text & "'", CONN)
+        RD = Cmd.ExecuteReader
         RD.Read ()
         If RD.HasRows Then
             LBLPerson.Text = RD.Item (5)
             LBLNama.Text = RD.Item(2)
         Else
-            MsgBox("Kode Pemasock tidak terdaftar")
+            MsgBox("Kode Pemasok tidak terdaftar")
         End If
     End Sub
 
