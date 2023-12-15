@@ -18,18 +18,18 @@ Public Class Pemakai
     End Sub
 
     Sub Tampilkan()
-        DA = New OleDbDataAdapter("Select * from Pemakai ORDER BY 1", CONN)
-        DS = New DataSet
-        DS.Clear()
-        DA.Fill(Ds, "Pemakai")
-        DGV.DataSource = (Ds.Tables("Pemakai"))
+        DA = New OleDbDataAdapter("Select * from Table_Pemakai ORDER BY 1", CONN)
+        Ds = New DataSet
+        Ds.Clear()
+        DA.Fill(Ds, "Table_Pemakai")
+        DGV.DataSource = (Ds.Tables("Table_Pemakai"))
         DGV.ReadOnly = True
     End Sub
 
     Private Sub Pemakai_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Call Koneksi()
         Call Tampilkan()
-        ComboBox1.Items.Add("ADMINISTRATOR")
+        ComboBox1.Items.Add("ADMIN")
         ComboBox1.Items.Add("OPERATOR")
         ComboBox1.Items.Add("KASIR")
     End Sub
@@ -37,7 +37,7 @@ Public Class Pemakai
     Private Sub TextBox1_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBox1.KeyPress
         TextBox1.MaxLength = 5
         If e.KeyChar = Chr(13) Then
-            Cmd = New OleDbCommand("select * from Pemakai where kodePMK='" & TextBox1.Text & "'", CONN)
+            Cmd = New OleDbCommand("select * from Table_Pemakai where KodePmk='" & TextBox1.Text & "'", CONN)
             RD = Cmd.ExecuteReader
             RD.Read()
             If RD.HasRows = True Then
@@ -69,18 +69,18 @@ Public Class Pemakai
             MsgBox("Data Belum Lengkap")
             Exit Sub
         Else
-            Cmd = New OleDbCommand("Select * from Pemakal where kodePMK='" & TextBox1.Text & "'", CONN)
+            Cmd = New OleDbCommand("Select * from Table_Pemakai where KodePmk='" & TextBox1.Text & "'", CONN)
             RD = Cmd.ExecuteReader
             RD.Read()
             If Not RD.HasRows Then
-                Dim sgltambah As String = "Insert into Pemakai (kodePMK, namaPMK, PassPMK, StatusPMK) values " & "('" & TextBox1.Text & "','" & TextBox2.Text & "','" & TextBox3.Text & "','" & ComboBox1.Text & "')"
+                Dim sgltambah As String = "Insert into Table_Pemakai (KodePmk, NamaPmk, PassPmk, StatusPmk) values " & "('" & TextBox1.Text & "','" & TextBox2.Text & "','" & TextBox3.Text & "','" & ComboBox1.Text & "')"
                 Cmd = New OleDbCommand(sgltambah, CONN)
                 Cmd.ExecuteNonQuery()
                 Call Kosongkan()
                 Call Tampilkan()
 
             Else
-                Dim sgledit As String = "Update Pemakal set " & "NamaPMK='" & TextBox2.Text & "', " & "PassPMK='" & TextBox3.Text & "', " & "StatusPMK='" & ComboBox1.Text & "' where kodePMK='" & TextBox1.Text & "'"
+                Dim sgledit As String = "Update Table_Pemakai set " & "NamaPmk='" & TextBox2.Text & "', " & "PassPmk='" & TextBox3.Text & "', " & "StatusPmk='" & ComboBox1.Text & "' where KodePmk='" & TextBox1.Text & "'"
                 Cmd = New OleDbCommand(sgledit, CONN)
                 Cmd.ExecuteNonQuery()
                 Call Kosongkan()
@@ -96,7 +96,7 @@ Public Class Pemakai
             Exit Sub
         Else
             If MessageBox.Show("Yakin akan dihapus..?", "", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-                Cmd = New OleDbCommand("Delete * from Pemakai where kodePMK='" & TextBox1.Text & "'", CONN)
+                Cmd = New OleDbCommand("Delete * from Table_Pemakai where KodePmk='" & TextBox1.Text & "'", CONN)
                 Cmd.ExecuteNonQuery()
                 Call Kosongkan()
                 Call Tampilkan()

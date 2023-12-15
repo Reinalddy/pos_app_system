@@ -3,11 +3,11 @@
 Public Class D_Pelanggan
 
     Sub Tampilkan()
-        DA = New OleDbDataAdapter("Select * from Pelanggan", CONN)
+        DA = New OleDbDataAdapter("Select * from Table_Pelanggan", CONN)
         Ds = New DataSet
         Ds.Clear()
-        DA.Fill(Ds, "Pelanggan")
-        DGV.DataSource = (Ds.Tables("Pelanggan"))
+        DA.Fill(Ds, "Table_Pelanggan")
+        DGV.DataSource = (Ds.Tables("Table_Pelanggan"))
         DGV.ReadOnly = True
     End Sub
 

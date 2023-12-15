@@ -10,35 +10,35 @@ Public Class Penerimaan
     End Sub
 
     Sub Tampilkan()
-        DA = New OleDbDataAdapter("Select * from TMPTerima", CONN)
+        DA = New OleDbDataAdapter("Select * from Table_TMPTerima", CONN)
         Ds = New DataSet
         Ds.Clear()
-        DA.Fill(Ds, "TMPTerima")
-        DGV.DataSource = (Ds.Tables("TMPTerima"))
+        DA.Fill(Ds, "Table_TMPTerima")
+        DGV.DataSource = (Ds.Tables("Table_TMPTerima"))
         DGV.ReadOnly = True
         Call AturKolom()
     End Sub
 
     Sub AturKolom()
-        DGV.Columns("kode").Width = 50
+        DGV.Columns("Kode").Width = 50
         DGV.Columns(1).Width = 250
         DGV.Columns(2).Width = 75
         DGV.Columns(3).Width = 75
     End Sub
 
     Sub HapusGrid()
-        DA = New OleDbDataAdapter("Delete * from TMPTerima", CONN)
+        DA = New OleDbDataAdapter("Delete * from Table_TMPTerima", CONN)
         Ds = New DataSet
         Ds.Clear()
-        DA.Fill(Ds, "TMPTerima")
-        DGV.DataSource = (Ds.Tables("TMPTerima"))
+        DA.Fill(Ds, "Table_TMPTerima")
+        DGV.DataSource = (Ds.Tables("Table_TMPTerima"))
 
     End Sub
 
     Sub CariTotalTerima()
 
         On Error Resume Next
-        Cmd = New OleDbCommand("select sum (Diterima) as ketemu from TMPTerima", CONN)
+        Cmd = New OleDbCommand("select sum (Diterima) as ketemu from Table_TMPTerima", CONN)
         RD = Cmd.ExecuteReader
         RD.Read()
         If RD.HasRows Then
@@ -49,7 +49,7 @@ Public Class Penerimaan
     End Sub
 
     Private Sub Otomatis()
-        Cmd = New OleDbCommand("Select * from Penerimaan where NomorTrm in (select max (NomorTrm) from Penerimaan) order by NomorTrm desc", CONN)
+        Cmd = New OleDbCommand("Select * from Table_Penerimaan_Barang where NomorTrm in (select max (NomorTrm) from Table_Penerimaan_Barang) order by NomorTrm desc", CONN)
         Dim urutan As String
         Dim hitung As Long
         RD = Cmd.ExecuteReader
@@ -66,8 +66,8 @@ Public Class Penerimaan
         LBLNomor.Text = urutan
     End Sub
 
-    Sub TampilPemasok()
-        Cmd = New OleDbCommand("select * from Pemasok", CONN)
+    Sub TampilTable_Pemasok()
+        Cmd = New OleDbCommand("select * from Table_Pemasok", CONN)
         RD = Cmd.ExecuteReader
         ComboBox1.Items.Clear()
         Do While RD.Read
@@ -85,7 +85,7 @@ Public Class Penerimaan
         Call Koneksi()
         Call HapusGrid()
         Call Tampilkan()
-        Call TampilPemasok()
+        Call TampilTable_Pemasok()
     End Sub
 
     Private Sub DGV_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles DGV.CellEndEdit
@@ -99,7 +99,7 @@ Public Class Penerimaan
 
     Private Sub DGV_CellValidating(sender As Object, e As DataGridViewCellValidatingEventArgs) Handles DGV.CellValidating
         If e.ColumnIndex = 0 Then
-            Cmd = New OleDbCommand("Select * from barang where KodeBrg='" & e.FormattedValue.ToString & "'", CONN)
+            Cmd = New OleDbCommand("Select * from Tabel_Barang where KodeBrg='" & e.FormattedValue.ToString & "'", CONN)
             RD = Cmd.ExecuteReader
             RD.Read()
             If RD.HasRows Then
@@ -121,38 +121,42 @@ Public Class Penerimaan
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         If ComboBox1.Text = "" Or NomorReff.Text = "" Or TotalTerima.Text = "" Then
             MsgBox("Data belum lengkap")
+
             Exit Sub
         End If
 
-        Try 
-            'simpan ke tabel Penerimaan
-            '"MenuUtama.Panell. Text
+        Try
+            ' Simpan ke tabel Penerimaan
             Dim Simpan As String
-            Simpan = "insert into Penerimaan (nomorTrm, tanggalTrm, KodePms, nomorbon, totalTrm, kedepmk) values " & _
-                "('" & LBLNomor.Text & "','" & LBLTanggal.Text & "','" & ComboBox1.Text & "','" & NomorReff.Text & "','" & TotalTerima.Text & "',' & MenuUtama.Panell.Text & "')"
+            Simpan = "INSERT INTO Table_Penerimaan_Barang (NomorTrm, TanggalTrm, KodePms, NomorBon, TotalTrm, KodePmk) VALUES " &
+            "('" & LBLNomor.Text & "','" & LBLTanggal.Text & "','" & ComboBox1.Text & "','" & NomorReff.Text & "','" & TotalTerima.Text & "','" & MenuUtama.Panel1.Text & "')"
             Cmd = New OleDbCommand(Simpan, CONN)
             Cmd.ExecuteNonQuery()
-            'baca tabel TMPTerima
-            DA = New OleDbDataAdapter ("select * from TMPTerima", CONN)
-            DS = New DataSet
-            DA.Fill (DS)
-            DGV.DataSource = DS.Tables (0)
-            Dim TBL As DataTable = DS.Tables (0)
-            For baris As Integer = 0 To TBL.Rows.Count - 1
-                Dim sglsimpan As String = "insert into DetailTerima (nomorTrm, KODEBRG, stokawal, gtytrm, stokakhir) values " & "('" & LBLNomor.Text & "','" & TBL.Rows(baris)(0) & "','" &
-                TBL.Rows(baris)(2) & "','" & TBL.Rows(baris)(3) & "','" & TBL.Rows(baris)(2) + TBL.Rows(baris)(3) & "')"
+
+            ' Baca tabel Table_TMPTerima
+            DA = New OleDbDataAdapter("SELECT * FROM Table_TMPTerima", CONN)
+            Ds = New DataSet
+            DA.Fill(Ds)
+            DGV.DataSource = Ds.Tables(0)
+
+            ' Simpan detail terima
+            For Each row As DataGridViewRow In DGV.Rows
+                Dim sglsimpan As String = "INSERT INTO Table_Detail_Terima (NomorTrm, KodeBrg, StokAwal, QtyTrm, StokAkhir) VALUES " &
+                "('" & LBLNomor.Text & "','" & row.Cells(0).Value.ToString() & "','" & row.Cells(2).Value.ToString() & "','" & row.Cells(3).Value.ToString() & "','" & row.Cells(2).Value.ToString() + row.Cells(3).Value.ToString() & "')"
                 Cmd = New OleDbCommand(sglsimpan, CONN)
                 Cmd.ExecuteNonQuery()
-                'tambahstok barang
-                Cmd = New OleDbCommand("select * from barang where KodeBrg='" & TBL.Rows(baris)(0) & "'", CONN)
+
+                ' Tambah stok barang
+                Cmd = New OleDbCommand("SELECT * FROM Tabel_Barang WHERE KodeBrg='" & row.Cells(0).Value.ToString() & "'", CONN)
                 RD = Cmd.ExecuteReader
                 RD.Read()
                 If RD.HasRows Then
-                    Dim TambahStok As String = "update barang set JumlahBrg= '" & RD.GetValue(3) + TBL.Rows(baris)(3) & "' where KodeBrg='" & TBL.Rows(baris)(0) & "'"
+                    Dim TambahStok As String = "UPDATE Tabel_Barang SET JumlahBrg='" & Convert.ToInt32(RD.GetValue(3)) + Convert.ToInt32(row.Cells(3).Value.ToString()) & "' WHERE KodeBrg='" & row.Cells(0).Value.ToString() & "'"
                     Cmd = New OleDbCommand(TambahStok, CONN)
                     Cmd.ExecuteNonQuery()
                 End If
-            Next baris
+            Next
+
             Call HapusGrid()
             Call Tampilkan()
             Call Kosongkan()
@@ -160,28 +164,28 @@ Public Class Penerimaan
             Call HapusMaster()
 
         Catch ex As Exception
-            MsgBox(ex.Message)
+            MsgBox("Error: " & ex.Message)
         End Try
     End Sub
 
     Private Sub TKode_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TKode.KeyPress
         If e.KeyChar = Chr(13) Then
             If TKode.Text = "" Then
-                'DaftarBarang. Show ()
-                MsgBox("kode barang masih kosong")
+                MsgBox("Kode barang masih kosong")
             Else
-                Cmd = New OleDbCommand("Select * from TMPTerima where kode='" & TKode.Text & "'", CONN)
+                ' Check in Table_TMPTerima
+                Cmd = New OleDbCommand("SELECT * FROM Table_TMPTerima WHERE Kode='" & TKode.Text & "'", CONN)
                 RD = Cmd.ExecuteReader
                 RD.Read()
                 If RD.HasRows Then
-                    TNama.Text = RD.GetString(1L)
+                    TNama.Text = RD.GetString(1)
                     TStok.Text = RD.GetValue(2)
-                    MsgBox("kode barang sudah ada dalam transaksi, edit saja jumlahnya")
-                    'Call Kosongkan()
+                    MsgBox("Kode barang sudah ada dalam transaksi, edit saja jumlahnya")
                     TStok.Focus()
                     Exit Sub
                 Else
-                    Cmd = New OleDbCommand("Select * from barang  KodeBrg='" & TKode.Text & "'", CONN)
+                    ' Check in Tabel_Barang
+                    Cmd = New OleDbCommand("SELECT * FROM Tabel_Barang WHERE KodeBrg='" & TKode.Text & "'", CONN)
                     RD = Cmd.ExecuteReader
                     RD.Read()
                     If RD.HasRows Then
@@ -198,11 +202,11 @@ Public Class Penerimaan
         End If
 
         If e.KeyChar = Chr(27) Then
-            Cmd = New OleDbCommand("select * from TMPTerima where kode='" & TKode.Text & "'", CONN)
+            Cmd = New OleDbCommand("SELECT * FROM Table_TMPTerima WHERE Kode='" & TKode.Text & "'", CONN)
             RD = Cmd.ExecuteReader
             RD.Read()
             If RD.HasRows Then
-                Dim sqlhapus As String = "delete * from TMPTerima where kode='" & TKode.Text & "'"
+                Dim sqlhapus As String = "DELETE FROM Table_TMPTerima WHERE Kode='" & TKode.Text & "'"
                 Cmd = New OleDbCommand(sqlhapus, CONN)
                 Cmd.ExecuteNonQuery()
                 Call Tampilkan()
@@ -212,7 +216,7 @@ Public Class Penerimaan
                 End If
                 TKode.Text = ""
             Else
-                MsgBox("Kode tidak ada dalam transaksi TKede. Focus ()")
+                MsgBox("Kode tidak ada dalam transaksi. Focus ()")
             End If
         End If
         'If e.KeyChar = Chr (9) Then TDibayar.Focus (
@@ -220,19 +224,18 @@ Public Class Penerimaan
 
     Private Sub TTerima_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TTerima.KeyPress
         If e.KeyChar = Chr(13) Then
-            Cmd = New OleDbCommand("select * from TMPTerima where kode='" &
-            TKode.Text & "'", CONN)
+            Cmd = New OleDbCommand("SELECT * FROM Table_TMPTerima WHERE Kode='" & TKode.Text & "'", CONN)
             RD = Cmd.ExecuteReader
             RD.Read()
             If RD.HasRows Then
-                Dim editjumlah As String = "update TMPTerima set diterima='" & TTerima.Text & "' where kode='" & TKode.Text & "'"
+                Dim editjumlah As String = "UPDATE Table_TMPTerima SET Diterima='" & TTerima.Text & "' WHERE Kode='" & TKode.Text & "'"
                 Cmd = New OleDbCommand(editjumlah, CONN)
                 Cmd.ExecuteNonQuery()
                 Call Tampilkan()
                 Call CariTotalTerima()
                 Call Kosongkan()
             Else
-                Dim sglsimpan As String = "Insert into TMPTerima (kode, nama, stokawal,diterima) values " & "('" & TKode.Text & "','" & TNama.Text & "','" & TStok.Text & "','" & TTerima.Text & "')"
+                Dim sglsimpan As String = "INSERT INTO Table_TMPTerima (Kode, Nama, StokAwal, Diterima) VALUES ('" & TKode.Text & "','" & TNama.Text & "','" & TStok.Text & "','" & TTerima.Text & "')"
                 Cmd = New OleDbCommand(sglsimpan, CONN)
                 Cmd.ExecuteNonQuery()
                 Call Tampilkan()
@@ -240,7 +243,7 @@ Public Class Penerimaan
                 Call Kosongkan()
             End If
         End If
-        If Not ((e.KeyChar >= "0" And e.KeyChar <= "9") Or e.KeyChar = vbBack) Then e.Handled() = True
+        If Not ((e.KeyChar >= "0" And e.KeyChar <= "9") Or e.KeyChar = vbBack) Then e.Handled = True
     End Sub
 
     Sub HapusMaster()
@@ -266,7 +269,7 @@ Public Class Penerimaan
     Private Sub ComboBox1_KeyPress(sender As Object, e As KeyPressEventArgs) Handles ComboBox1.KeyPress
         If e.KeyChar = Chr(13) Then
             If ComboBox1.Text = "" Then
-                MsgBox("Kode Pemasok masih kosong")
+                MsgBox("Kode Table_Pemasok masih kosong")
             Else
                 NomorReff.Focus()
             End If
@@ -274,18 +277,22 @@ Public Class Penerimaan
     End Sub
 
     Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox1.SelectedIndexChanged
-        Cmd = New OleDbCommand("select * from Pemasok where KodePms='" & ComboBox1.Text & "'", CONN)
+        Cmd = New OleDbCommand("select * from Table_Pemasok where KodePms='" & ComboBox1.Text & "'", CONN)
         RD = Cmd.ExecuteReader
-        RD.Read ()
+        RD.Read()
         If RD.HasRows Then
-            LBLPerson.Text = RD.Item (5)
+            LBLPerson.Text = RD.Item(5)
             LBLNama.Text = RD.Item(2)
         Else
-            MsgBox("Kode Pemasok tidak terdaftar")
+            MsgBox("Kode Table_Pemasok tidak terdaftar")
         End If
     End Sub
 
     Private Sub NomorReff_KeyPress(sender As Object, e As KeyPressEventArgs) Handles NomorReff.KeyPress
         If e.KeyChar = Chr(13) Then TKode.Focus()
+    End Sub
+
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
+        D_Barang.ShowDialog()
     End Sub
 End Class

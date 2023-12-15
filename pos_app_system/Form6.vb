@@ -2,11 +2,11 @@
 Public Class D_Barang
 
     Sub Tampilkan()
-        DA = New OleDbDataAdapter("Select KodeBrg,NamaBrg,StokMinimal from barang", CONN)
+        DA = New OleDbDataAdapter("Select KodeBrg,NamaBrg,JumlahBrg from Tabel_Barang", CONN)
         Ds = New DataSet
         Ds.Clear()
-        DA.Fill(Ds, "Barang")
-        DGV.DataSource = (Ds.Tables("Barang"))
+        DA.Fill(Ds, "Tabel_Barang")
+        DGV.DataSource = (Ds.Tables("Tabel_Barang"))
         DGV.ReadOnly = True
 
     End Sub
@@ -24,7 +24,7 @@ Public Class D_Barang
 
             Penerimaan.TKode.Text = .Cells(0).Value
 
-            Penerimaan.TNama.Text = .Cells(1L).Value
+            Penerimaan.TNama.Text = .Cells(1).Value
 
             Penerimaan.TStok.Text = .Cells(2).Value
         End With
@@ -33,4 +33,5 @@ Public Class D_Barang
         Me.Close()
         Penerimaan.TTerima.Focus()
     End Sub
+
 End Class

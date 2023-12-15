@@ -21,11 +21,11 @@ Public Class Pelanggan
     End Sub
 
     Sub Tampilkan()
-        DA = New OleDbDataAdapter("Select * from Pelanggan", CONN)
+        DA = New OleDbDataAdapter("Select * from Table_Pelanggan", CONN)
         Ds = New DataSet
         Ds.Clear()
-        DA.Fill(Ds, "Pelanggan'")
-        DGV.DataSource = (Ds.Tables("Pelanggan"))
+        DA.Fill(Ds, "Table_Pelanggan")
+        DGV.DataSource = (Ds.Tables("Table_Pelanggan"))
         DGV.ReadOnly = True
     End Sub
 
@@ -39,7 +39,7 @@ Public Class Pelanggan
         TextBox1.MaxLength = 3
         If e.KeyChar = Chr(13) Then
             Try
-                Cmd = New OleDbCommand("select * from Pelanggan where KodePlg='" & TextBox1.Text & "'", CONN)
+                Cmd = New OleDbCommand("select * from Table_Pelanggan where KodePlg='" & TextBox1.Text & "'", CONN)
 
                 RD = Cmd.ExecuteReader
 
@@ -91,18 +91,18 @@ Public Class Pelanggan
             MsgBox("Data Belum Lengkap")
             Exit Sub
         Else
-            Cmd = New OleDbCommand("Select * from Pelanggan where KodePlg='" & TextBox1.Text & "'", CONN)
+            Cmd = New OleDbCommand("Select * from Table_Pelanggan where KodePlg='" & TextBox1.Text & "'", CONN)
             RD = Cmd.ExecuteReader
             RD.Read()
             If Not RD.HasRows Then
-                Dim sqltambah As String = "Insert into Pelanggan(KodePlg,NamaPlg,AlamatPlg,TeleponPlg,EmailPlg,JK) values" & "'('" & TextBox1.Text & "','" & TextBox2.Text & "','" & TextBox3.Text & "','" & TextBox4.Text & "','" & TextBox5.Text & "','" & ComboBox1.Text & "')"
+                Dim sqltambah As String = "INSERT INTO Table_Pelanggan (KodePlg, NamaPlg, AlamatPlg, TeleponPLg, EmailPlg, JK) VALUES ('" & TextBox1.Text & "','" & TextBox2.Text & "','" & TextBox3.Text & "','" & TextBox4.Text & "','" & TextBox5.Text & "','" & ComboBox1.Text & "')"
                 Cmd = New OleDbCommand(sqltambah, CONN)
                 Cmd.ExecuteNonQuery()
 
                 Call Kosongkan()
                 Call Tampilkan()
             Else
-                Dim sqledit As String = "Update Pelanggan set " & "NamaPlg='" & TextBox2.Text & "', " & "AlamatPlg='" & TextBox3.Text & "', " & "TeleponPlg='" & TextBox4.Text & "', " & "EmailPlg='" & TextBox5.Text & "', " & "JK='" & ComboBox1.Text & "' " & "where KodePlg='" & TextBox1.Text & "'"
+                Dim sqledit As String = "UPDATE Table_Pelanggan SET NamaPlg='" & TextBox2.Text & "', AlamatPlg='" & TextBox3.Text & "', TeleponPLg='" & TextBox4.Text & "', EmailPlg='" & TextBox5.Text & "', JK='" & ComboBox1.Text & "' WHERE KodePlg='" & TextBox1.Text & "'"
                 Cmd = New OleDbCommand(sqledit, CONN)
                 Cmd.ExecuteNonQuery()
                 Call Kosongkan()
@@ -118,7 +118,7 @@ Public Class Pelanggan
             Exit Sub
         Else
             If MessageBox.Show("Yakin akan dihapus..?", "", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-                Cmd = New OleDbCommand("Delete * from Pelanggan where KodePlg ='" & TextBox1.Text & "'", CONN)
+                Cmd = New OleDbCommand("Delete * from Table_Pelanggan where KodePlg ='" & TextBox1.Text & "'", CONN)
                 Cmd.ExecuteNonQuery()
                 Call Kosongkan()
                 Call Tampilkan()
@@ -135,4 +135,5 @@ Public Class Pelanggan
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
         Me.Close()
     End Sub
+
 End Class

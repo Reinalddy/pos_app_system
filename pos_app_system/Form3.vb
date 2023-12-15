@@ -30,11 +30,11 @@ Public Class Pemasok
     End Sub
 
     Sub Tampilkan()
-        DA = New OleDbDataAdapter("Select * from Pemasok", CONN)
-        DS = New DataSet
-        DS.Clear()
-        DA.Fill(Ds, "Pemasok")
-        DGV.DataSource = (DS.Tables("Pemasok"))
+        DA = New OleDbDataAdapter("Select * from Table_Pemasok", CONN)
+        Ds = New DataSet
+        Ds.Clear()
+        DA.Fill(Ds, "Table_Pemasok")
+        DGV.DataSource = (Ds.Tables("Table_Pemasok"))
         DGV.ReadOnly = True
 
     End Sub
@@ -43,7 +43,7 @@ Public Class Pemasok
         TextBox1.MaxLength = 3
         If e.KeyChar = Chr(13) Then
             Try
-                Cmd = New OleDbCommand("select * from Pemasok where KodePms='" & TextBox1.Text & "'", CONN)
+                Cmd = New OleDbCommand("select * from Table_Pemasok where KodePms='" & TextBox1.Text & "'", CONN)
                 RD = Cmd.ExecuteReader
                 RD.Read()
 
@@ -90,11 +90,11 @@ Public Class Pemasok
             MsgBox("Data Belum Lengkap")
             Exit Sub
         Else
-            Cmd = New OleDbCommand("Select * from Pemasok where KodePms='" & TextBox1.Text & "'", CONN)
-            RD = CMD.ExecuteReader
+            Cmd = New OleDbCommand("Select * from Table_Pemasok where KodePms='" & TextBox1.Text & "'", CONN)
+            RD = Cmd.ExecuteReader
             RD.Read()
             If Not RD.HasRows Then
-                Dim sqltambah As String = "Insert into Pemasok (KodePms, NamaPms, AlamatPms, TeleponPms, PersonPms,EmailPms) values " &
+                Dim sqltambah As String = "Insert into Table_Pemasok (KodePms, NamaPms, AlamatPms, TeleponPms, PersonPms,EmailPms) values " &
             "('" & TextBox1.Text & "','" & TextBox2.Text & "','" & TextBox3.Text & "','" & TextBox4.Text & "','" & TextBox5.Text & "','" & TextBox6.Text & "')"
                 Cmd = New OleDbCommand(sqltambah, CONN)
                 Cmd.ExecuteNonQuery()
@@ -103,12 +103,12 @@ Public Class Pemasok
 
             Else
 
-                Dim sqledit As String = "Update Pemasok set " &
+                Dim sqledit As String = "Update Table_Pemasok set " &
                 "NamaPms='" & TextBox2.Text & "', " &
                 "AlamatPms='" & TextBox3.Text & "', " &
                 "TeleponPms='" & TextBox4.Text & "', " &
-                "PersonPms=' " & TextBox5.Text & "', " &
-                "EmailPms=' " & TextBox6.Text & "', " &
+                "PersonPms='" & TextBox5.Text & "', " &
+                "EmailPms='" & TextBox6.Text & "' " &
                 "Where KodePms='" & TextBox1.Text & "'"
 
                 Cmd = New OleDbCommand(sqledit, CONN)
@@ -126,7 +126,7 @@ Public Class Pemasok
             Exit Sub
         Else
             If MessageBox.Show("Yakin akan di hapus..?", "", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-                Cmd = New OleDbCommand("Delete * From Pemasok Where KodePms ='" & TextBox1.Text & "'", CONN)
+                Cmd = New OleDbCommand("Delete * From Table_Pemasok Where KodePms ='" & TextBox1.Text & "'", CONN)
                 Cmd.ExecuteNonQuery()
                 Call Kosongkan()
                 Call Tampilkan()

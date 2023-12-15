@@ -10,7 +10,7 @@ Public Class Transaksi
     Sub BuatKolomBaru()
 
         DGV.Columns.Add("Kode", "Kode")
-        DGV.Columns.Add("Nama", "Nama Barang")
+        DGV.Columns.Add("Nama", "Nama_Barang")
         DGV.Columns.Add("Harga", "Harga")
         DGV.Columns.Add("Jumlah", "Jumlah")
         DGV.Columns.Add("Total", "SubTotal")
@@ -26,7 +26,7 @@ Public Class Transaksi
     End Sub
 
     Sub FakturOtomatis()
-        Cmd = New OleDbCommand("Select * from penjualan where faktur in (select max (faktur) from penjualan) order by faktur desc", CONN)
+        Cmd = New OleDbCommand("Select * from Table_Penjualan where faktur in (select max (Faktur) from Table_Penjualan) order by Faktur desc", CONN)
         Dim urutan As String
         Dim hitung As Long
         RD = Cmd.ExecuteReader
@@ -51,7 +51,7 @@ Public Class Transaksi
         Tanggal.Text = Today
     End Sub
     Sub TampilPelanggan()
-        Cmd = New OleDbCommand("select * from Pelanggan", CONN)
+        Cmd = New OleDbCommand("select * from Table_Pelanggan", CONN)
         RD = Cmd.ExecuteReader
         ComboBox1.Items.Clear()
         Do While RD.Read
@@ -72,7 +72,7 @@ Public Class Transaksi
 
     Private Sub DGV_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles DGV.CellEndEdit
         If e.ColumnIndex = 0 Then
-            Cmd = New OleDbCommand("select * from barang where KodeBrg='" &
+            Cmd = New OleDbCommand("select * from Tabel_Barang where KodeBrg='" &
             DGV.Rows(e.RowIndex).Cells(0).Value & "'", CONN)
             RD = Cmd.ExecuteReader
             RD.Read()
@@ -86,13 +86,13 @@ Public Class Transaksi
                 Call TotalHarga()
 
             Else
-                MsgBox("Kode barang tidak terdaftar")
+                MsgBox("Kode Tabel_Barang tidak terdaftar")
             End If
         End If
 
         If e.ColumnIndex = 3 Then
 
-            Cmd = New OleDbCommand("select * from barang where KodeBrg='" &
+            Cmd = New OleDbCommand("select * from Tabel_Barang where KodeBrg='" &
             DGV.Rows(e.RowIndex).Cells(0).Value & "'", CONN)
             RD = Cmd.ExecuteReader
             RD.Read()
@@ -190,11 +190,11 @@ Public Class Transaksi
             masih kosong")
             Exit Sub
         End If
-        'simpan ke tabel penjualan
-        Dim simpanmaster As String = "Insert into penjualan (faktur, tanggal, item, total, dibayar, kembali, KodePmk, KodePlg) values " &
+        'simpan ke tabel Table_Penjualan
+        Dim simpanmaster As String = "Insert into Table_Penjualan (Faktur, Tanggal, Item, Total, Dibayar, Kembali, KodePmk, KodePlg) values " &
         "('" & Faktur.Text & "','" & Tanggal.Text & "','" & Item.Text &
         "','" & Total.Text & "','" & Dibayar.Text & "','" & Kembali.Text & "','" &
-        Menuutama.Panel1.Text & "','" & ComboBox1.Text & "')"
+        MenuUtama.Panel1.Text & "','" & ComboBox1.Text & "')"
 
         Cmd = New OleDbCommand(simpanmaster, CONN)
         Cmd.ExecuteNonQuery()
@@ -203,26 +203,26 @@ Public Class Transaksi
 
             'simpan ke tabel detail
 
-            Dim sglsimpan As String = "Insert into detailjual (faktur,KodeBrg, nama Barang,harga Jual,jumlah, subtotal) values " &
+            Dim sglsimpan As String = "Insert into Table_DetailJual (Faktur,KodeBrg, Nama_Barang,Harga_Jual,Jumlah, Subtotal) values " &
                 "('" & Faktur.Text & "','" & DGV.Rows(baris).Cells(0).Value &
                 "','" & DGV.Rows(baris).Cells(3).Value & "','" & DGV.Rows(baris).Cells(3).Value &
                 "','" & DGV.Rows(baris).Cells(4).Value & "')"
 
-            CMD = New OleDbCommand(sglsimpan, CONN)
+            Cmd = New OleDbCommand(sglsimpan, CONN)
 
-            CMD.ExecuteNonQuery()
+            Cmd.ExecuteNonQuery()
 
-            'kurangi stok barang
+            'kurangi stok Tabel_Barang
 
-            CMD = New OleDbCommand("select * from barang where KodeBrg='" &
+            Cmd = New OleDbCommand("select * from Tabel_Barang where KodeBrg='" &
             DGV.Rows(baris).Cells(0).Value & "'", CONN)
 
-            RD = CMD.ExecuteReader
+            RD = Cmd.ExecuteReader
 
             RD.Read()
 
             If RD.HasRows Then
-                Dim kurangistok As String = "update barang set JumlahBrg= '" &
+                Dim kurangistok As String = "update Tabel_Barang set JumlahBrg= '" &
                     RD.Item(3) - DGV.Rows(baris).Cells(3).Value & "' where KodeBrg='" &
                     DGV.Rows(baris).Cells(0).Value & "'"
                 Cmd = New OleDbCommand(kurangistok, CONN)
@@ -256,7 +256,7 @@ Public Class Transaksi
     End Sub
 
     Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox1.SelectedIndexChanged
-        Cmd = New OleDbCommand("select * from Pelanggan where KodePlg='" &
+        Cmd = New OleDbCommand("select * from Table_Pelanggan where KodePlg='" &
                                ComboBox1.Text & "'", CONN)
         RD = Cmd.ExecuteReader
         RD.Read()

@@ -3,9 +3,6 @@ Imports System.Windows.Forms.VisualStyles.VisualStyleElement
 Imports System.Windows.Forms.VisualStyles.VisualStyleElement.ToolBar
 
 Public Class Barang
-    Private Sub Label1_Click(sender As Object, e As EventArgs) Handles Label1.Click
-
-    End Sub
     Sub Kosongkan()
         TextBox1.Text = ""
         TextBox2.Text = ""
@@ -26,11 +23,11 @@ Public Class Barang
     End Sub
 
     Sub Tampilkan()
-        DA = New OleDbDataAdapter("Select * from barang", CONN)
+        DA = New OleDbDataAdapter("Select * from Tabel_Barang", CONN)
         Ds = New DataSet
         Ds.Clear()
-        DA.Fill(Ds, "Barang")
-        DGV.DataSource = (Ds.Tables("Barang"))
+        DA.Fill(Ds, "Tabel_Barang")
+        DGV.DataSource = (Ds.Tables("Tabel_Barang"))
         DGV.ReadOnly = True
     End Sub
 
@@ -38,7 +35,7 @@ Public Class Barang
 
         ComboBox1.Items.Clear()
 
-        Cmd = New OleDbCommand("select distinct satuan from Barang", CONN)
+        Cmd = New OleDbCommand("select distinct satuan from Tabel_Barang", CONN)
 
         RD = Cmd.ExecuteReader
         While RD.Read
@@ -58,7 +55,7 @@ Public Class Barang
     Private Sub TextBox1_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBox1.KeyPress
         If e.KeyChar = Chr(13) Then
             Try
-                Cmd = New OleDbCommand("select * from barang where KodeBrg='" & TextBox1.Text & "'", CONN)
+                Cmd = New OleDbCommand("select * from Tabel_Barang where KodeBrg='" & TextBox1.Text & "'", CONN)
                 RD = Cmd.ExecuteReader
                 RD.Read()
                 If RD.HasRows = True Then
@@ -96,19 +93,19 @@ Public Class Barang
             MsgBox("Data Belum Lengkap")
             Exit Sub
         Else
-            Cmd = New OleDbCommand("Select * from barang where KodeBrg='" & TextBox1.Text & "'", CONN)
+            Cmd = New OleDbCommand("Select * from Tabel_Barang where KodeBrg='" & TextBox1.Text & "'", CONN)
             RD = Cmd.ExecuteReader
             RD.Read()
             If Not RD.HasRows Then
-                Dim sgltambah As String = "Insert into barang (KodeBrg, NamaBrg, Satuan, JumlahBrg, Harga) values " & "('" & TextBox1.Text & "','" & TextBox2.Text & "','" & ComboBox1.Text & "','" & TextBox3.Text & "','" & TextBox4.Text & "')"
+                Dim sgltambah As String = "Insert into Tabel_Barang (KodeBrg, NamaBrg, Satuan, JumlahBrg, Harga) values " & "('" & TextBox1.Text & "','" & TextBox2.Text & "','" & ComboBox1.Text & "','" & TextBox3.Text & "','" & TextBox4.Text & "')"
                 Cmd = New OleDbCommand(sgltambah, CONN)
                 Cmd.ExecuteNonQuery()
                 Call Kosongkan()
                 Call Tampilkan()
             Else
-                Dim sgledit As String = "Update barang Set " & "NamaBrg='" & TextBox2.Text & "', " & "Satuan='" & ComboBox1.Text & "', " & "JumlahBrg='" & TextBox3.Text & "' " & "Harga='" & TextBox4.Text & "' " & "where KodeBrg='" & TextBox1.Text & "'"
+                Dim sgledit As String = "Update Tabel_Barang Set " & "NamaBrg='" & TextBox2.Text & "', " & "Satuan='" & ComboBox1.Text & "', " & "JumlahBrg='" & TextBox3.Text & "', " & "Harga='" & TextBox4.Text & "' " & "where KodeBrg='" & TextBox1.Text & "'"
                 Cmd = New OleDbCommand(sgledit, CONN)
-                CMD.ExecuteNonQuery()
+                Cmd.ExecuteNonQuery()
                 Call Kosongkan()
                 Call Tampilkan()
             End If
@@ -117,13 +114,13 @@ Public Class Barang
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         If TextBox1.Text = "" Then
-            MsgBox("Isi kode barang terlebih dahulu")
+            MsgBox("Isi kode Tabel_Barang terlebih dahulu")
             TextBox1.Focus()
             Exit Sub
         Else
             If MessageBox.Show("Yakin akan dihapus..?", "'",
             MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-                Cmd = New OleDbCommand("Delete * from barang where KodeBrg='" & TextBox1.Text & "'", CONN)
+                Cmd = New OleDbCommand("Delete * from Tabel_Barang where KodeBrg='" & TextBox1.Text & "'", CONN)
                 Cmd.ExecuteNonQuery()
                 Call Kosongkan()
                 Call Tampilkan()
@@ -140,4 +137,5 @@ Public Class Barang
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
         Me.Close()
     End Sub
+
 End Class
