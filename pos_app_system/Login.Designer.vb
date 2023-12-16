@@ -54,7 +54,7 @@ Partial Class Login
         '
         'Button1
         '
-        Me.Button1.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Button1.BackColor = System.Drawing.Color.RoyalBlue
         Me.Button1.DialogResult = System.Windows.Forms.DialogResult.Cancel
         Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button1.ForeColor = System.Drawing.SystemColors.Control
