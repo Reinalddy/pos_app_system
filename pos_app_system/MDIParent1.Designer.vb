@@ -69,32 +69,32 @@ Partial Class MenuUtama
         'BarangToolStripMenuItem
         '
         Me.BarangToolStripMenuItem.Name = "BarangToolStripMenuItem"
-        Me.BarangToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.BarangToolStripMenuItem.Size = New System.Drawing.Size(130, 22)
         Me.BarangToolStripMenuItem.Text = "Barang"
         '
         'PelangganToolStripMenuItem
         '
         Me.PelangganToolStripMenuItem.Name = "PelangganToolStripMenuItem"
-        Me.PelangganToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.PelangganToolStripMenuItem.Size = New System.Drawing.Size(130, 22)
         Me.PelangganToolStripMenuItem.Text = "Pelanggan"
         '
         'PemasokToolStripMenuItem
         '
         Me.PemasokToolStripMenuItem.Name = "PemasokToolStripMenuItem"
-        Me.PemasokToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.PemasokToolStripMenuItem.Size = New System.Drawing.Size(130, 22)
         Me.PemasokToolStripMenuItem.Text = "Pemasok"
         '
         'PemakaiToolStripMenuItem
         '
         Me.PemakaiToolStripMenuItem.Name = "PemakaiToolStripMenuItem"
-        Me.PemakaiToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.PemakaiToolStripMenuItem.Size = New System.Drawing.Size(130, 22)
         Me.PemakaiToolStripMenuItem.Text = "Pemakai"
         '
         'EditMenu
         '
         Me.EditMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PenerimaanBarangToolStripMenuItem, Me.PenjualanToolStripMenuItem})
         Me.EditMenu.Name = "EditMenu"
-        Me.EditMenu.Size = New System.Drawing.Size(68, 20)
+        Me.EditMenu.Size = New System.Drawing.Size(66, 20)
         Me.EditMenu.Text = "Transaksi"
         '
         'PenerimaanBarangToolStripMenuItem
@@ -119,13 +119,13 @@ Partial Class MenuUtama
         'RincianStokToolStripMenuItem
         '
         Me.RincianStokToolStripMenuItem.Name = "RincianStokToolStripMenuItem"
-        Me.RincianStokToolStripMenuItem.Size = New System.Drawing.Size(168, 22)
+        Me.RincianStokToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.RincianStokToolStripMenuItem.Text = "Rincian Stok"
         '
         'RincianPenjualanToolStripMenuItem
         '
         Me.RincianPenjualanToolStripMenuItem.Name = "RincianPenjualanToolStripMenuItem"
-        Me.RincianPenjualanToolStripMenuItem.Size = New System.Drawing.Size(168, 22)
+        Me.RincianPenjualanToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.RincianPenjualanToolStripMenuItem.Text = "Rincian Penjualan"
         '
         'ToolsMenu
@@ -171,13 +171,13 @@ Partial Class MenuUtama
         'Panel2
         '
         Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(121, 17)
+        Me.Panel2.Size = New System.Drawing.Size(119, 17)
         Me.Panel2.Text = "ToolStripStatusLabel1"
         '
         'Panel3
         '
         Me.Panel3.Name = "Panel3"
-        Me.Panel3.Size = New System.Drawing.Size(121, 17)
+        Me.Panel3.Size = New System.Drawing.Size(119, 17)
         Me.Panel3.Text = "ToolStripStatusLabel2"
         '
         'MenuUtama

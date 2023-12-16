@@ -119,7 +119,7 @@ Public Class Penerimaan
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        If ComboBox1.Text = "" Or NomorReff.Text = "" Or TotalTerima.Text = "" Then
+        If ComboBox1.Text = "" Or NomorReff.Text = "" Or TxtBoxTotalTerima.Text = "" Then
             MsgBox("Data belum lengkap")
 
             Exit Sub
@@ -129,7 +129,7 @@ Public Class Penerimaan
             ' Simpan ke tabel Penerimaan
             Dim Simpan As String
             Simpan = "INSERT INTO Table_Penerimaan_Barang (NomorTrm, TanggalTrm, KodePms, NomorBon, TotalTrm, KodePmk) VALUES " &
-            "('" & LBLNomor.Text & "','" & LBLTanggal.Text & "','" & ComboBox1.Text & "','" & NomorReff.Text & "','" & TotalTerima.Text & "','" & MenuUtama.Panel1.Text & "')"
+            "('" & LBLNomor.Text & "','" & LBLTanggal.Text & "','" & ComboBox1.Text & "','" & NomorReff.Text & "','" & TxtBoxTotalTerima.Text & "','" & MenuUtama.Panel1.Text & "')"
             Cmd = New OleDbCommand(Simpan, CONN)
             Cmd.ExecuteNonQuery()
 

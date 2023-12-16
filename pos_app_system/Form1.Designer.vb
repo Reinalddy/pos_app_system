@@ -37,6 +37,8 @@ Partial Class Barang
         Me.Button3 = New System.Windows.Forms.Button()
         Me.Button4 = New System.Windows.Forms.Button()
         Me.DGV = New System.Windows.Forms.DataGridView()
+        Me.TextBox5 = New System.Windows.Forms.TextBox()
+        Me.Label6 = New System.Windows.Forms.Label()
         CType(Me.DGV, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -79,7 +81,7 @@ Partial Class Barang
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(12, 109)
+        Me.Label5.Location = New System.Drawing.Point(12, 138)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(36, 13)
         Me.Label5.TabIndex = 4
@@ -116,14 +118,14 @@ Partial Class Barang
         '
         'TextBox4
         '
-        Me.TextBox4.Location = New System.Drawing.Point(87, 111)
+        Me.TextBox4.Location = New System.Drawing.Point(87, 140)
         Me.TextBox4.Name = "TextBox4"
         Me.TextBox4.Size = New System.Drawing.Size(100, 20)
         Me.TextBox4.TabIndex = 9
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(6, 139)
+        Me.Button1.Location = New System.Drawing.Point(6, 166)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(75, 23)
         Me.Button1.TabIndex = 10
@@ -132,7 +134,7 @@ Partial Class Barang
         '
         'Button2
         '
-        Me.Button2.Location = New System.Drawing.Point(87, 139)
+        Me.Button2.Location = New System.Drawing.Point(87, 166)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(75, 23)
         Me.Button2.TabIndex = 11
@@ -141,7 +143,7 @@ Partial Class Barang
         '
         'Button3
         '
-        Me.Button3.Location = New System.Drawing.Point(168, 139)
+        Me.Button3.Location = New System.Drawing.Point(168, 166)
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(75, 23)
         Me.Button3.TabIndex = 12
@@ -150,7 +152,7 @@ Partial Class Barang
         '
         'Button4
         '
-        Me.Button4.Location = New System.Drawing.Point(249, 139)
+        Me.Button4.Location = New System.Drawing.Point(249, 166)
         Me.Button4.Name = "Button4"
         Me.Button4.Size = New System.Drawing.Size(75, 23)
         Me.Button4.TabIndex = 13
@@ -160,16 +162,34 @@ Partial Class Barang
         'DGV
         '
         Me.DGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DGV.Location = New System.Drawing.Point(-33, 168)
+        Me.DGV.Location = New System.Drawing.Point(-28, 232)
         Me.DGV.Name = "DGV"
         Me.DGV.Size = New System.Drawing.Size(389, 206)
         Me.DGV.TabIndex = 14
+        '
+        'TextBox5
+        '
+        Me.TextBox5.Location = New System.Drawing.Point(87, 114)
+        Me.TextBox5.Name = "TextBox5"
+        Me.TextBox5.Size = New System.Drawing.Size(100, 20)
+        Me.TextBox5.TabIndex = 15
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Location = New System.Drawing.Point(12, 114)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(67, 13)
+        Me.Label6.TabIndex = 16
+        Me.Label6.Text = "Stok Minimal"
         '
         'Barang
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(357, 450)
+        Me.Controls.Add(Me.Label6)
+        Me.Controls.Add(Me.TextBox5)
         Me.Controls.Add(Me.DGV)
         Me.Controls.Add(Me.Button4)
         Me.Controls.Add(Me.Button3)
@@ -209,4 +229,6 @@ Partial Class Barang
     Friend WithEvents Button3 As Button
     Friend WithEvents Button4 As Button
     Friend WithEvents DGV As DataGridView
+    Friend WithEvents TextBox5 As TextBox
+    Friend WithEvents Label6 As Label
 End Class

@@ -2,7 +2,7 @@
 Public Class D_Barang
 
     Sub Tampilkan()
-        DA = New OleDbDataAdapter("Select KodeBrg,NamaBrg,JumlahBrg from Tabel_Barang", CONN)
+        DA = New OleDbDataAdapter("Select KodeBrg,NamaBrg,StokMinimal from Tabel_Barang", CONN)
         Ds = New DataSet
         Ds.Clear()
         DA.Fill(Ds, "Tabel_Barang")

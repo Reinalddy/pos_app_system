@@ -37,4 +37,12 @@ Public Class MenuUtama
     Private Sub StatusStrip1_ItemClicked(sender As Object, e As ToolStripItemClickedEventArgs) Handles StatusStrip1.ItemClicked
 
     End Sub
+
+    Private Sub RincianStokToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RincianStokToolStripMenuItem.Click
+        RincianStok.ShowDialog()
+    End Sub
+
+    Private Sub RincianPenjualanToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RincianPenjualanToolStripMenuItem.Click
+        RincianTransaksi.ShowDialog()
+    End Sub
 End Class

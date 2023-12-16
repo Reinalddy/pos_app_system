@@ -97,13 +97,13 @@ Public Class Barang
             RD = Cmd.ExecuteReader
             RD.Read()
             If Not RD.HasRows Then
-                Dim sgltambah As String = "Insert into Tabel_Barang (KodeBrg, NamaBrg, Satuan, JumlahBrg, Harga) values " & "('" & TextBox1.Text & "','" & TextBox2.Text & "','" & ComboBox1.Text & "','" & TextBox3.Text & "','" & TextBox4.Text & "')"
+                Dim sgltambah As String = "Insert into Tabel_Barang (KodeBrg, NamaBrg, Satuan, JumlahBrg,StokMinimal, Harga) values " & "('" & TextBox1.Text & "','" & TextBox2.Text & "','" & ComboBox1.Text & "','" & TextBox3.Text & "','" & TextBox5.Text & "','" & TextBox4.Text & "')"
                 Cmd = New OleDbCommand(sgltambah, CONN)
                 Cmd.ExecuteNonQuery()
                 Call Kosongkan()
                 Call Tampilkan()
             Else
-                Dim sgledit As String = "Update Tabel_Barang Set " & "NamaBrg='" & TextBox2.Text & "', " & "Satuan='" & ComboBox1.Text & "', " & "JumlahBrg='" & TextBox3.Text & "', " & "Harga='" & TextBox4.Text & "' " & "where KodeBrg='" & TextBox1.Text & "'"
+                Dim sgledit As String = "Update Tabel_Barang Set " & "NamaBrg='" & TextBox2.Text & "', " & "Satuan='" & ComboBox1.Text & "', " & "JumlahBrg='" & TextBox3.Text & "', " & "StokMinimal='" & TextBox5.Text & ", " & "Harga='" & TextBox4.Text & "' " & "where KodeBrg='" & TextBox1.Text & "'"
                 Cmd = New OleDbCommand(sgledit, CONN)
                 Cmd.ExecuteNonQuery()
                 Call Kosongkan()
