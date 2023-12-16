@@ -22,6 +22,7 @@ Partial Class Penerimaan
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Penerimaan))
         Me.TotalTerima = New System.Windows.Forms.Label()
         Me.TxtBoxTotalTerima = New System.Windows.Forms.TextBox()
         Me.DGV = New System.Windows.Forms.DataGridView()
@@ -305,6 +306,7 @@ Partial Class Penerimaan
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.LBLNomor)
         Me.Controls.Add(Me.TxtBoxName)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "Penerimaan"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Form : Penerimaan"

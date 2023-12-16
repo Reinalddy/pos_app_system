@@ -24,6 +24,7 @@ Partial Class MenuUtama
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MenuUtama))
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         Me.MenuStrip = New System.Windows.Forms.MenuStrip()
         Me.FileMenu = New System.Windows.Forms.ToolStripMenuItem()
@@ -94,7 +95,7 @@ Partial Class MenuUtama
         '
         Me.EditMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PenerimaanBarangToolStripMenuItem, Me.PenjualanToolStripMenuItem})
         Me.EditMenu.Name = "EditMenu"
-        Me.EditMenu.Size = New System.Drawing.Size(66, 20)
+        Me.EditMenu.Size = New System.Drawing.Size(68, 20)
         Me.EditMenu.Text = "Transaksi"
         '
         'PenerimaanBarangToolStripMenuItem
@@ -119,13 +120,13 @@ Partial Class MenuUtama
         'RincianStokToolStripMenuItem
         '
         Me.RincianStokToolStripMenuItem.Name = "RincianStokToolStripMenuItem"
-        Me.RincianStokToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.RincianStokToolStripMenuItem.Size = New System.Drawing.Size(168, 22)
         Me.RincianStokToolStripMenuItem.Text = "Rincian Stok"
         '
         'RincianPenjualanToolStripMenuItem
         '
         Me.RincianPenjualanToolStripMenuItem.Name = "RincianPenjualanToolStripMenuItem"
-        Me.RincianPenjualanToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.RincianPenjualanToolStripMenuItem.Size = New System.Drawing.Size(168, 22)
         Me.RincianPenjualanToolStripMenuItem.Text = "Rincian Penjualan"
         '
         'ToolsMenu
@@ -171,13 +172,13 @@ Partial Class MenuUtama
         'Panel2
         '
         Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(119, 17)
+        Me.Panel2.Size = New System.Drawing.Size(121, 17)
         Me.Panel2.Text = "ToolStripStatusLabel1"
         '
         'Panel3
         '
         Me.Panel3.Name = "Panel3"
-        Me.Panel3.Size = New System.Drawing.Size(119, 17)
+        Me.Panel3.Size = New System.Drawing.Size(121, 17)
         Me.Panel3.Text = "ToolStripStatusLabel2"
         '
         'MenuUtama
@@ -187,6 +188,7 @@ Partial Class MenuUtama
         Me.ClientSize = New System.Drawing.Size(632, 453)
         Me.Controls.Add(Me.MenuStrip)
         Me.Controls.Add(Me.StatusStrip1)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.IsMdiContainer = True
         Me.Name = "MenuUtama"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
