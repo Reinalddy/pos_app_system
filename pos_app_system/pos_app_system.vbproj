@@ -252,6 +252,9 @@
     <Content Include="Database4.mdb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="kasir.png" />
+    <None Include="img\login.png" />
+    <None Include="img\login.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
