@@ -22,8 +22,12 @@
             End If
             Me.Close()
         Else
-            ProgressBar1.Value += 1
-            Label1.Text = ProgressBar1.Value
+            ProgressBar1.Value += 5
+            Label1.Text = ProgressBar1.Value & "%"
         End If
+    End Sub
+
+    Private Sub ProgressBar1_Click(sender As Object, e As EventArgs) Handles ProgressBar1.Click
+
     End Sub
 End Class

@@ -252,6 +252,10 @@
     <Content Include="Database4.mdb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="img\logo.png" />
+    <None Include="img\logolengkap.png" />
+    <None Include="img\login3.png" />
+    <None Include="img\kasir2.png" />
     <Content Include="kasir.png" />
     <None Include="img\login.png" />
     <None Include="img\login.jpg" />

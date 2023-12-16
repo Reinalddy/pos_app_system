@@ -49,4 +49,8 @@ Public Class Login
     Private Sub Button2_MouseLeave(sender As Object, e As EventArgs) Handles Button2.MouseLeave
         Button2.BackColor = Color.Red
     End Sub
+
+    Private Sub TextBox2_TextChanged(sender As Object, e As EventArgs) Handles TextBox2.TextChanged
+
+    End Sub
 End Class
