@@ -102,7 +102,7 @@ Public Class Penerimaan
             If RD.HasRows Then
                 DGV.Rows(e.RowIndex).Cells(0).Value = RD.GetString(0)
                 DGV.Rows(e.RowIndex).Cells(1).Value = RD.GetString(1)
-                DGV.Rows(e.RowIndex).Cells(2).Value = RD.GetValue(2)
+                'DGV.Rows(e.RowIndex).Cells(2).Value = RD.GetValue(2)
                 Exit Sub
             Else
                 Beep()
