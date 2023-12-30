@@ -255,9 +255,9 @@ Partial Class Penerimaan
         Me.Label1.AutoSize = True
         Me.Label1.Location = New System.Drawing.Point(14, 17)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(35, 13)
+        Me.Label1.Size = New System.Drawing.Size(38, 13)
         Me.Label1.TabIndex = 56
-        Me.Label1.Text = "Name"
+        Me.Label1.Text = "Nomor"
         '
         'LBLNomor
         '
