@@ -1,4 +1,6 @@
 ﻿Imports System.Data.OleDb
+Imports System.Text
+
 Public Class Penerimaan
     Sub Kosongkan()
         TKode.Text = ""
@@ -49,21 +51,15 @@ Public Class Penerimaan
     End Sub
 
     Private Sub Otomatis()
-        Cmd = New OleDbCommand("Select * from Table_Penerimaan_Barang where NomorTrm in (select max (NomorTrm) from Table_Penerimaan_Barang) order by NomorTrm desc", CONN)
+        Cmd = New OleDbCommand("Select * from Table_Penerimaan_Barang", CONN)
+        Dim randomstring As String = GenerateRandomString(1)
+
         Dim urutan As String
         Dim hitung As Long
         RD = Cmd.ExecuteReader
         RD.Read()
-        If Not RD.HasRows Then
-            urutan = "TR" + Format(Now, "yyMMdd") + "01"
-        Else
-            If Microsoft.VisualBasic.Mid(RD.GetString(0), 3, 6) <> Format(Now, "yyMMdd") Then
-                urutan = "TR" + Format(Now, "yyMMdd") + "01"
-            Else
-                hitung = Microsoft.VisualBasic.Right(RD.GetString(0), 2) + urutan = "TR" + Format(Now, "yyMMdd") + Microsoft.VisualBasic.Right("00" & hitung, 2)
-            End If
-        End If
-        LBLNomor.Text = urutan
+        urutan = "TR" + Format(Now, "yyMMdd") + randomstring
+        TxtBoxName.Text = urutan
     End Sub
 
     Sub TampilTable_Pemasok()
@@ -79,6 +75,7 @@ Public Class Penerimaan
         Koneksi()
         Call Otomatis()
         LBLTanggal.Text = Today
+        TxtBoxTanggal.Text = Today
     End Sub
 
     Private Sub Penerimaan_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -119,7 +116,7 @@ Public Class Penerimaan
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        If ComboBox1.Text = "" Or NomorReff.Text = "" Or TxtBoxTotalTerima.Text = "" Then
+        If TKode.Text = "" Or TNama.Text = "" Or TTerima.Text = "" Then
             MsgBox("Data belum lengkap")
 
             Exit Sub
@@ -127,10 +124,34 @@ Public Class Penerimaan
 
         Try
             ' Simpan ke tabel Penerimaan
-            Dim Simpan As String
-            Simpan = "INSERT INTO Table_Penerimaan_Barang (NomorTrm, TanggalTrm, KodePms, NomorBon, TotalTrm, KodePmk) VALUES " &
-            "('" & LBLNomor.Text & "','" & LBLTanggal.Text & "','" & ComboBox1.Text & "','" & NomorReff.Text & "','" & TxtBoxTotalTerima.Text & "','" & MenuUtama.Panel1.Text & "')"
+
+            'Dim Simpan As String
+            'Simpan = "INSERT INTO Table_Penerimaan_Barang (NomorTrm, TanggalTrm, KodePms, NomorBon, TotalTrm, KodePmk) VALUES " & "('" & TxtBoxName.Text & "','" & TxtBoxTanggal.Text & "','" & ComboBox1.Text & "','" & NomorReff.Text & "','" & TTerima.Text & "','" & MenuUtama.Panel1.Text & "')"
+
+            'Cmd = New OleDbCommand(Simpan, CONN)
+            'Cmd.ExecuteNonQuery()
+
+            Dim Simpan As String = "INSERT INTO Table_Penerimaan_Barang (NomorTrm, TanggalTrm, KodePms, NomorBon, TotalTrm, KodePmk) VALUES (@NomorTrm, @TanggalTrm, @KodePms, @NomorBon, @TotalTrm, @KodePmk)"
+
             Cmd = New OleDbCommand(Simpan, CONN)
+            Cmd.Parameters.AddWithValue("@NomorTrm", TxtBoxName.Text)
+            Cmd.Parameters.AddWithValue("@TanggalTrm", TxtBoxTanggal.Text)
+            Cmd.Parameters.AddWithValue("@KodePms", ComboBox1.Text)
+            Cmd.Parameters.AddWithValue("@NomorBon", NomorReff.Text)
+            Cmd.Parameters.AddWithValue("@TotalTrm", TTerima.Text)
+            Cmd.Parameters.AddWithValue("@KodePmk", MenuUtama.Panel1.Text)
+            Cmd.ExecuteNonQuery()
+            debugs.Text = TxtBoxName.Text
+
+
+            'simpan kedalam table tmpt penerima
+            Dim sql_simpan_tmp As String = "INSERT INTO Table_TMPTerima (Kode, Nama, StokAwal, Diterima) VALUES (@Kode, @Nama, @StokAwal, @Diterima)"
+
+            Cmd = New OleDbCommand(sql_simpan_tmp, CONN)
+            Cmd.Parameters.AddWithValue("@Kode", TKode.Text)
+            Cmd.Parameters.AddWithValue("@Nama", TxtBoxNama.Text)
+            Cmd.Parameters.AddWithValue("@StokAwal", TStok.Text)
+            Cmd.Parameters.AddWithValue("@Diterima", TTerima.Text)
             Cmd.ExecuteNonQuery()
 
             ' Baca tabel Table_TMPTerima
@@ -138,30 +159,7 @@ Public Class Penerimaan
             Ds = New DataSet
             DA.Fill(Ds)
             DGV.DataSource = Ds.Tables(0)
-
-            ' Simpan detail terima
-            For Each row As DataGridViewRow In DGV.Rows
-                Dim sglsimpan As String = "INSERT INTO Table_Detail_Terima (NomorTrm, KodeBrg, StokAwal, QtyTrm, StokAkhir) VALUES " &
-                "('" & LBLNomor.Text & "','" & row.Cells(0).Value.ToString() & "','" & row.Cells(2).Value.ToString() & "','" & row.Cells(3).Value.ToString() & "','" & row.Cells(2).Value.ToString() + row.Cells(3).Value.ToString() & "')"
-                Cmd = New OleDbCommand(sglsimpan, CONN)
-                Cmd.ExecuteNonQuery()
-
-                ' Tambah stok barang
-                Cmd = New OleDbCommand("SELECT * FROM Tabel_Barang WHERE KodeBrg='" & row.Cells(0).Value.ToString() & "'", CONN)
-                RD = Cmd.ExecuteReader
-                RD.Read()
-                If RD.HasRows Then
-                    Dim TambahStok As String = "UPDATE Tabel_Barang SET JumlahBrg='" & Convert.ToInt32(RD.GetValue(3)) + Convert.ToInt32(row.Cells(3).Value.ToString()) & "' WHERE KodeBrg='" & row.Cells(0).Value.ToString() & "'"
-                    Cmd = New OleDbCommand(TambahStok, CONN)
-                    Cmd.ExecuteNonQuery()
-                End If
-            Next
-
-            Call HapusGrid()
-            Call Tampilkan()
-            Call Kosongkan()
-            Call Otomatis()
-            Call HapusMaster()
+            Otomatis()
 
         Catch ex As Exception
             MsgBox("Error: " & ex.Message)
@@ -282,7 +280,8 @@ Public Class Penerimaan
         RD.Read()
         If RD.HasRows Then
             LBLPerson.Text = RD.Item(5)
-            LBLNama.Text = RD.Item(2)
+            TxtBoxNama.Text = RD.Item(5)
+            TxtBoxPerson.Text = RD.Item(5)
         Else
             MsgBox("Kode Table_Pemasok tidak terdaftar")
         End If
@@ -295,4 +294,25 @@ Public Class Penerimaan
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
         D_Barang.ShowDialog()
     End Sub
+
+    Function GenerateRandomString(length As Integer) As String
+        ' Karakter yang mungkin dalam random string
+        Const chars As String = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+
+        ' Inisialisasi objek Random
+        Dim rand As New Random()
+
+        ' StringBuilder untuk menggabungkan karakter
+        Dim builder As New StringBuilder()
+
+        ' Generate random string
+        For i As Integer = 1 To length
+            Dim index As Integer = rand.Next(0, chars.Length)
+            builder.Append(chars(index))
+        Next
+
+        ' Kembalikan random string yang dihasilkan
+        Return builder.ToString()
+    End Function
+
 End Class

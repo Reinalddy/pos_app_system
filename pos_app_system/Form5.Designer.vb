@@ -50,6 +50,7 @@ Partial Class Penerimaan
         Me.Label1 = New System.Windows.Forms.Label()
         Me.LBLNomor = New System.Windows.Forms.Label()
         Me.TxtBoxName = New System.Windows.Forms.TextBox()
+        Me.debugs = New System.Windows.Forms.TextBox()
         CType(Me.DGV, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -274,11 +275,19 @@ Partial Class Penerimaan
         Me.TxtBoxName.Size = New System.Drawing.Size(121, 20)
         Me.TxtBoxName.TabIndex = 54
         '
+        'debugs
+        '
+        Me.debugs.Location = New System.Drawing.Point(330, 300)
+        Me.debugs.Name = "debugs"
+        Me.debugs.Size = New System.Drawing.Size(100, 20)
+        Me.debugs.TabIndex = 81
+        '
         'Penerimaan
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(581, 336)
+        Me.Controls.Add(Me.debugs)
         Me.Controls.Add(Me.TotalTerima)
         Me.Controls.Add(Me.TxtBoxTotalTerima)
         Me.Controls.Add(Me.DGV)
@@ -343,4 +352,5 @@ Partial Class Penerimaan
     Friend WithEvents Label1 As Label
     Friend WithEvents LBLNomor As Label
     Friend WithEvents TxtBoxName As TextBox
+    Friend WithEvents debugs As TextBox
 End Class
