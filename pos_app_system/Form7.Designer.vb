@@ -57,6 +57,7 @@ Partial Class Transaksi
         Me.BTNTutup = New System.Windows.Forms.Button()
         Me.Kembali = New System.Windows.Forms.TextBox()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
+        Me.debugForm = New System.Windows.Forms.TextBox()
         CType(Me.DGV, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -337,11 +338,19 @@ Partial Class Transaksi
         '
         Me.Timer1.Enabled = True
         '
+        'debugForm
+        '
+        Me.debugForm.Location = New System.Drawing.Point(12, 292)
+        Me.debugForm.Name = "debugForm"
+        Me.debugForm.Size = New System.Drawing.Size(100, 20)
+        Me.debugForm.TabIndex = 32
+        '
         'Transaksi
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(800, 324)
+        Me.Controls.Add(Me.debugForm)
         Me.Controls.Add(Me.Kembali)
         Me.Controls.Add(Me.BTNTutup)
         Me.Controls.Add(Me.BTNBatal)
@@ -417,4 +426,5 @@ Partial Class Transaksi
     Friend WithEvents BTNTutup As Button
     Friend WithEvents Kembali As TextBox
     Friend WithEvents Timer1 As Timer
+    Friend WithEvents debugForm As TextBox
 End Class
